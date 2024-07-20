@@ -48,7 +48,8 @@ nuget-push:
 
 docker-build-web:
   rules:
-    - if: $IS_WEB
+    - if: $IS_API
+      when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_BRANCH == 'test'
   image: docker:cli
   stage: build
