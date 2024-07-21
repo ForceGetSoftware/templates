@@ -1,0 +1,16 @@
+
+nuget-push:
+  rules:
+  - if: "$IS_API"
+  - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_BRANCH == 'test'"
+  image: mcr.microsoft.com/dotnet/sdk:8.0
+  stage: build
+  script:
+  - dotnet nuget add source "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/nuget/index.json"
+    --name gitlabnuget --username gitlab-ci-token --password $CI_JOB_TOKEN --store-password-in-clear-text
+  - cd src/${PROJECT}.Core/
+  - dotnet pack -c Release /p:version=8.2.$CI_JOB_ID
+  - dotnet nuget push "bin/Release/*.nupkg" --source gitlabnuget
+  - cd ../${PROJECT}.DataAccess
+  - dotnet pack -c Release /p:version=8.2.$CI_JOB_ID
+  - dotnet nuget push "bin/Release/*.nupkg" --source gitlabnuget
