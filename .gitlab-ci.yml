@@ -12,9 +12,8 @@ code_quality:
   artifacts:
     paths: [gl-code-quality-report.html]
   rules:
-    - if: $CODE_QUALITY_DISABLED
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" # Run code quality job in merge request pipelines
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH      # Run code quality job in pipelines on the default branch (but not in other branch pipelines)
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" 
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH      
 
 docker-build-api:
   rules:
@@ -29,7 +28,6 @@ docker-build-api:
   script:
     - docker build --build-arg BUILD_NUMBER=$CI_JOB_ID -t "$DOCKER_IMAGE_NAME" .
     - docker push "$DOCKER_IMAGE_NAME"
-
 
 nuget-push:
   rules:
@@ -48,7 +46,7 @@ nuget-push:
 
 docker-build-web:
   rules:
-    - if: $IS_WEB == true
+    - if: $IS_WEB
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_BRANCH == 'test'
   image: docker:cli
   stage: build
