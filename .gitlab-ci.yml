@@ -23,3 +23,6 @@ docker-build:
   script:
     - docker build --build-arg BUILD_NUMBER=$CI_JOB_ID  --build-arg GIT_BRANCH=$CI_COMMIT_BRANCH -t "$DOCKER_IMAGE_NAME" .
     - docker push "$DOCKER_IMAGE_NAME"
+  only:
+    - main
+    - test
