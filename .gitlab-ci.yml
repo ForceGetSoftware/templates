@@ -2,9 +2,7 @@ include:
   - template: Jobs/Code-Quality.gitlab-ci.yml
 
 variables:
-  IS_API: true
-  IS_WEB: true
-  PROJECT: 'Amazon'
+  PROJECT: 'ProjectPathName'
 
 code_quality:
   variables:
@@ -16,9 +14,6 @@ code_quality:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH      
 
 docker-build-api:
-  rules:
-    - if: $IS_API
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   image: docker:cli
   stage: build
   services:
@@ -26,13 +21,10 @@ docker-build-api:
   variables:
     DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   script:
-    - docker build --build-arg BUILD_NUMBER=$CI_JOB_ID -t "$DOCKER_IMAGE_NAME" .
+    - docker build --build-arg BUILD_NUMBER=$CI_JOB_ID  --build-arg GIT_BRANCH=$CI_COMMIT_BRANCH -t "$DOCKER_IMAGE_NAME" .
     - docker push "$DOCKER_IMAGE_NAME"
 
 nuget-push:
-  rules:
-    - if: $IS_API
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_BRANCH == 'test'
   image: mcr.microsoft.com/dotnet/sdk:8.0
   stage: build
   script:
@@ -43,17 +35,3 @@ nuget-push:
     - cd ../${PROJECT}.DataAccess
     - dotnet pack -c Release /p:version=8.2.$CI_JOB_ID
     - dotnet nuget push "bin/Release/*.nupkg" --source gitlabnuget
-
-docker-build-web:
-  rules:
-    - if: $IS_WEB
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_BRANCH == 'test'
-  image: docker:cli
-  stage: build
-  services:
-    - docker:dind
-  variables:
-    DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-  script:
-    - docker build --build-arg BUILD_NUMBER=$CI_JOB_ID --build-arg GIT_BRANCH=$CI_COMMIT_BRANCH -t "$DOCKER_IMAGE_NAME" -f src/Dockerfile .
-    - docker push "$DOCKER_IMAGE_NAME"
