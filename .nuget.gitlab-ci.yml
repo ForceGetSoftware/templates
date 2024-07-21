@@ -1,8 +1,5 @@
 
 nuget-push:
-  rules:
-  - if: "$IS_API"
-  - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_BRANCH == 'test'"
   image: mcr.microsoft.com/dotnet/sdk:8.0
   stage: build
   script:
@@ -14,3 +11,6 @@ nuget-push:
   - cd ../${PROJECT}.DataAccess
   - dotnet pack -c Release /p:version=8.2.$CI_JOB_ID
   - dotnet nuget push "bin/Release/*.nupkg" --source gitlabnuget
+  only:
+    - main
+    - test
