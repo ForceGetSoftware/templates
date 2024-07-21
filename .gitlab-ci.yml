@@ -13,7 +13,7 @@ code_quality:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" 
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH      
 
-docker-build-api:
+docker-build:
   image: docker:cli
   stage: build
   services:
