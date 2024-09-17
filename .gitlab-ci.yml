@@ -1,5 +1,4 @@
-include:
-  - template: Jobs/Code-Quality.gitlab-ci.yml
+
 
 variables:
   PROJECT: 'ProjectPathName'
