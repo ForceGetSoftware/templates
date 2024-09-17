@@ -4,14 +4,6 @@ include:
 variables:
   PROJECT: 'ProjectPathName'
 
-code_quality:
-  variables:
-    REPORT_FORMAT: html
-  artifacts:
-    paths: [gl-code-quality-report.html]
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" 
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH      
 
 docker-build:
   image: docker:cli
