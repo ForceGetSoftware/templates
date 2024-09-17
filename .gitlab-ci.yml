@@ -1,9 +1,4 @@
 
-
-variables:
-  PROJECT: 'ProjectPathName'
-
-
 docker-build:
   image: docker:cli
   stage: build
