@@ -1,14 +1,3 @@
-
-variables:
-  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
-  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
-  SONAR_HOST_URL: https://devops-sonarqube.forceget.com.tr
-  SONAR_TOKEN: sqp_5afbea2d679430c1eff530b960a10974ce810188
-
-stages:
-  - build-sonar
-
-
 build-sonar:
   stage: build-sonar
   image: mcr.microsoft.com/dotnet/sdk:9.0
@@ -20,7 +9,7 @@ build-sonar:
       - sonar-scanner
   script: 
       - "dotnet tool install --global dotnet-sonarscanner"
-      - "dotnet sonarscanner begin /k:\"${SONAR}" /d:sonar.token=\"sqp_5afbea2d679430c1eff530b960a10974ce810188\" /d:\"sonar.host.url=https://devops-sonarqube.forceget.com.tr\" "
+      - "dotnet sonarscanner begin /k:"${SONAR}" /d:sonar.token"sqp_5afbea2d679430c1eff530b960a10974ce810188" /d:"sonar.host.url=https://devops-sonarqube.forceget.com.tr" "
       - "dotnet build"
-      - "dotnet sonarscanner end /d:sonar.token=\"sqp_5afbea2d679430c1eff530b960a10974ce810188\""
+      - "dotnet sonarscanner end /d:sonar.token="sqp_5afbea2d679430c1eff530b960a10974ce810188""
   allow_failure: true
