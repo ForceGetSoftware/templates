@@ -8,7 +8,7 @@ build-sonar:
       - "${SONAR_USER_HOME}/cache"
       - sonar-scanner
   script: 
-      - dotnet sonarscanner begin /k:"${SONAR}" /d:sonar.token"sqp_5afbea2d679430c1eff530b960a10974ce810188" /d:"sonar.host.url=https://devops-sonarqube.forceget.com.tr"
+      - dotnet sonarscanner begin k:"${SONAR}" d:sonar.token"sqp_5afbea2d679430c1eff530b960a10974ce810188" d:"sonar.host.url=https://devops-sonarqube.forceget.com.tr"
       - dotnet build
-      - dotnet sonarscanner end /d:sonar.token="sqp_5afbea2d679430c1eff530b960a10974ce810188"
+      - dotnet sonarscanner end d:sonar.token="sqp_5afbea2d679430c1eff530b960a10974ce810188"
   allow_failure: true
