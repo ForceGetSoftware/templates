@@ -20,7 +20,6 @@ build-sonar:
       - sonar-scanner
   script: 
       - "dotnet tool install --global dotnet-sonarscanner"
-      - export PATH="$PATH:$HOME/.dotnet/tools"
       - "dotnet sonarscanner begin /k:\"${SONAR}" /d:sonar.token=\"sqp_5afbea2d679430c1eff530b960a10974ce810188\" /d:\"sonar.host.url=https://devops-sonarqube.forceget.com.tr\" "
       - "dotnet build"
       - "dotnet sonarscanner end /d:sonar.token=\"sqp_5afbea2d679430c1eff530b960a10974ce810188\""
