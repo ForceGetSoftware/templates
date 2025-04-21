@@ -13,5 +13,3 @@ docker-build:
   only:
     - main
     - test
-    - postgres
-    - postgresmain
