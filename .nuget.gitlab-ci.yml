@@ -14,5 +14,3 @@ nuget-push:
   only:
     - main
     - test
-    - postgres
-    - postgresmain
