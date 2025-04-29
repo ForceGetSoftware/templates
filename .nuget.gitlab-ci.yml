@@ -1,7 +1,7 @@
 
 nuget-push:
   image: mcr.microsoft.com/dotnet/sdk:9.0
-  stage: build
+  stage: nuget
   script:
   - dotnet nuget add source "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/nuget/index.json"
     --name gitlabnuget --username gitlab-ci-token --password $CI_JOB_TOKEN --store-password-in-clear-text
