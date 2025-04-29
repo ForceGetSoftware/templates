@@ -1,4 +1,10 @@
 
+stages:
+  - test
+  - build
+  - nuget
+  - sonar
+  
 docker-build:
   image: docker:cli
   stage: build
