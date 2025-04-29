@@ -1,14 +1,10 @@
-build-sonar:
-  stage: build-sonar
-  image: mcr.microsoft.com/dotnet/sdk:9.0
-  cache:
-    policy: pull-push
-    key: "sonar-cache-$CI_COMMIT_REF_SLUG"
-    paths:
-      - "${SONAR_USER_HOME}/cache"
-      - sonar-scanner
-  script: 
-      - dotnet sonarscanner begin k:"${SONAR}" d:sonar.token"sqp_5afbea2d679430c1eff530b960a10974ce810188" d:"sonar.host.url=https://devops-sonarqube.forceget.com.tr"
-      - dotnet build
-      - dotnet sonarscanner end d:sonar.token="sqp_5afbea2d679430c1eff530b960a10974ce810188"
+sonarqube:
+  image: devops-docker.forceget.com.tr/forceget/n-tier-architecture:base-9.0
+  stage: sonar
   allow_failure: true
+  script:
+    - dotnet sonarscanner begin /k:"${SONAR_PROJECT}" /d:sonar.host.url="https://devops-sonarqube.forceget.com.tr"  /d:sonar.token="${SONAR_TOKEN}"
+    - dotnet build
+    - dotnet sonarscanner end /d:sonar.token="${SONAR_TOKEN}"
+  only:
+    - test
