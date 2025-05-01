@@ -1,0 +1,16 @@
+publish-npm:
+  image: node:20
+  stage: publish-npm
+  script:
+    - cd src
+    - sed -i "s|#version#|${CI_JOB_ID}-${CI_COMMIT_BRANCH}|g" package.json
+    - yarn
+    - sed -i "s|dependencies|peerDependencies|g" package.json
+    - npm run packagr
+    - cd dist
+    - echo "@scope:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/" > .npmrc
+    - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - npm publish
+  only:
+    - main
+    - test
