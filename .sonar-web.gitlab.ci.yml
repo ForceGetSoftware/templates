@@ -1,0 +1,8 @@
+docker-build:
+  image: devops-docker.forceget.com.tr/forceget/forceget-base-theme:sonar
+  stage: sonar
+  script:
+    - cd src
+    - sonar -Dsonar.host.url=https://devops-sonarqube.forceget.com.tr -Dsonar.token=${SONAR_TOKEN} -Dsonar.projectKey=${SONAR_PROJECT}
+  only:
+    - test
