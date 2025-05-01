@@ -1,4 +1,4 @@
-docker-build:
+sonar:
   image: devops-docker.forceget.com.tr/forceget/forceget-base-theme:sonar
   stage: sonar
   allow_failure: true
