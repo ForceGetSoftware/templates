@@ -12,7 +12,8 @@ nuget-push:
   - dotnet pack -c Release /p:version=9.0.$CI_JOB_ID-$CI_COMMIT_BRANCH
   - dotnet nuget push "bin/Release/*.nupkg" --source gitlabnuget
   only:
-    - main
-    - test
-  changes:
-    - src/${PROJECT}.Core/**/*
+    refs:
+      - main
+      - test
+    changes:
+      - src/${PROJECT}.Core/**/*
