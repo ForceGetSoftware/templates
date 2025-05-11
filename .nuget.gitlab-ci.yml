@@ -14,3 +14,5 @@ nuget-push:
   only:
     - main
     - test
+  changes:
+    - src/${PROJECT}.Core/**/*
