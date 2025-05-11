@@ -11,9 +11,8 @@ nuget-push:
   - cd ../${PROJECT}.DataAccess
   - dotnet pack -c Release /p:version=9.0.$CI_JOB_ID-$CI_COMMIT_BRANCH
   - dotnet nuget push "bin/Release/*.nupkg" --source gitlabnuget
-  only:
-    refs:
-      - main
-      - test
-    changes:
-      - src/${PROJECT}.Core/**/*
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "test"'
+      changes:
+        - src/${PROJECT}.Core/**/*
+      when: on_success
