@@ -8,9 +8,6 @@ nuget-push:
   - cd src/${PROJECT}.Core/
   - dotnet pack -c Release /p:version=9.0.$CI_JOB_ID-$CI_COMMIT_BRANCH
   - dotnet nuget push "bin/Release/*.nupkg" --source gitlabnuget
-  - cd ../${PROJECT}.DataAccess
-  - dotnet pack -c Release /p:version=9.0.$CI_JOB_ID-$CI_COMMIT_BRANCH
-  - dotnet nuget push "bin/Release/*.nupkg" --source gitlabnuget
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "test"'
       changes:
