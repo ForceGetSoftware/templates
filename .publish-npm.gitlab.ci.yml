@@ -4,7 +4,7 @@ publish-npm:
   script:
     - cd src
     - sed -i "s|#version#|${CI_JOB_ID}-${CI_COMMIT_BRANCH}|g" package.json
-    - yarn
+    - npm i
     - sed -i "s|dependencies|peerDependencies|g" package.json
     - npm run packagr
     - cd dist
