@@ -1,5 +1,5 @@
 sonarqube:
-  image: devops-docker.forceget.com.tr/forceget/n-tier-architecture:base-9.0
+  image: devops-docker.forceget.com.tr/forceget/n-tier-architecture:base-10.0
   stage: sonar
   allow_failure: true
   script:
