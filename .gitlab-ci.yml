@@ -1,4 +1,3 @@
-
 docker-build:
   image: docker:cli
   stage: build
@@ -6,8 +5,15 @@ docker-build:
     - docker:dind
   variables:
     DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    DOCKER_BUILDKIT: "1"
   script:
-    - docker build --build-arg BUILD_NUMBER=$CI_JOB_ID  --build-arg GIT_BRANCH=$CI_COMMIT_BRANCH -t "$DOCKER_IMAGE_NAME" .
+    - |
+      docker build \
+        --build-arg BUILD_NUMBER=$CI_JOB_ID \
+        --build-arg GIT_BRANCH=$CI_COMMIT_BRANCH \
+        --secret id=nuget_user,env=NUGET_GITLAB_USER \
+        --secret id=nuget_token,env=NUGET_GITLAB_TOKEN \
+        -t "$DOCKER_IMAGE_NAME" .
     - docker push "$DOCKER_IMAGE_NAME"
     - docker system prune -f
   only:
